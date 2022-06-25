@@ -8,7 +8,10 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import ru.spiridonov.allservices.MyJobService.Companion.JOB_ID
+import ru.spiridonov.allservices.MyWorker.Companion.WORK_NAME
 import ru.spiridonov.allservices.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +55,16 @@ class MainActivity : AppCompatActivity() {
             else
                 stopService(MyIntentService2.newIntent(this, page++))
 
+        }
+        binding.jobIntentService.setOnClickListener {
+            MyJobIntentService.enqueue(this, page++)
+        }
+
+        binding.workManager.setOnClickListener {
+            val workManager = WorkManager.getInstance(applicationContext)
+            workManager.enqueueUniqueWork(WORK_NAME,
+                ExistingWorkPolicy.APPEND,
+                MyWorker.makeRequest(page++))
         }
     }
 }

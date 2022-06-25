@@ -33,7 +33,7 @@ class MyIntentService2 : IntentService(NAME) {
 
 
     companion object {
-        private const val NAME = "MyIntentService"
+        private const val NAME = "MyIntentService2"
         private const val PAGE = "page"
         fun newIntent(context: Context, page:Int) =
              Intent(context, MyIntentService2::class.java).apply {
